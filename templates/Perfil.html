@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>FlameDate</title>
+  <link rel="icon" type="image/png" href="img/logo.svg"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="swipes-page">
+
+  <!-- Sidebar -->
+  <div class="sidebar d-flex flex-column align-items-center p-4 text-white">
+    <a href="Swipes.html" class="back-arrow mb-4">
+      <img src="img/arrow-back.png" alt="Volver" />
+    </a>
+    <img src="img/perfil.svg" class="profile-avatar mb-3 rounded-circle" alt="Usuario" />
+    <h2 class="profile-name">MARC, 20</h2>
+    <p class="profile-status">✨ LO QUE SURJA</p>
+    <button class="btn btn-white mt-3">Cerrar Sesión</button>
+  </div>
+
+  <!-- Panel principal -->
+  <div class="profile-settings text-white p-4">
+    <div class="header">
+        <img src="img/logo.svg" class="logo-icon" alt="Logo" />
+        <h1 class="logo-text">FLAMEDATE</h1>
+    </div>
+      
+
+    <h3 class="section-title">CONFIGURACIÓN</h3>
+
+    <!-- Editar fotos -->
+    <div class="photo-gallery d-flex gap-3 my-4">
+      <img src="img/perfil.svg" class="photo-thumb rounded" />
+      <img src="img/perfil2.png" class="photo-thumb rounded" />
+      <img src="img/perfil3.png" class="photo-thumb rounded" />
+      <div class="photo-thumb add-photo d-flex align-items-center justify-content-center rounded">
+        <span class="plus-icon">+</span>
+      </div>
+    </div>
+
+    <!-- Información personal -->
+    <div class="info-section mb-4">
+        <h5 class="mb-3">INFORMACIÓN PERSONAL</h5>
+        <input type="text" class="form-input me-2" placeholder="Nombre" />
+        <input type="number" class="form-input" placeholder="Edad" />
+    </div>
+  
+
+    <!-- Intereses -->
+    <div class="info-section mb-4">
+      <h5 class="mb-3">INTERESES</h5>
+      <select class="form-select custom-select w-auto d-inline-block me-2">
+        <option selected>Mujeres</option>
+        <option>Hombres</option>
+        <option>Ambos</option>
+      </select>
+    </div>
+
+    <!-- Identidad -->
+    <div class="info-section mb-4">
+      <h5 class="mb-3">ME IDENTIFICO</h5>
+      <select class="form-select custom-select w-auto d-inline-block">
+        <option selected>Heterosexual</option>
+        <option>Homosexual</option>
+        <option>Bisexual</option>
+        <option>Otro</option>
+      </select>
+    </div>
+
+    <!-- Qué buscas -->
+    <div class="info-section">
+      <h5 class="mb-3">BUSCO...</h5>
+      
+        <div class="dot-selector">
+        <input type="radio" id="dot-red" name="dot" value="red" hidden>
+        <label for="dot-red" class="dot-option">
+            <span class="dot red"></span> 😍 RELACIÓN ESTABLE
+        </label>
+
+        <input type="radio" id="dot-yellow" name="dot" value="yellow" hidden>
+        <label for="dot-yellow" class="dot-option">
+            <span class="dot yellow"></span> 😅 ROLLOS CORTOS
+        </label>
+
+        <input type="radio" id="dot-blue" name="dot" value="blue" hidden>
+        <label for="dot-blue" class="dot-option">
+            <span class="dot blue"></span> 🤝 HACER AMIGOS
+        </label>
+
+        <input type="radio" id="dot-sparkle" name="dot" value="sparkle" hidden>
+        <label for="dot-sparkle" class="dot-option">
+            <span class="dot sparkle"></span> ✨ LO QUE SURJA
+        </label>
+        </div>
+    </div>
+  </div>
+  
+</body>
+</html>

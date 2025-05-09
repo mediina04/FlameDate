@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>FlameDate</title>
+  <link rel="icon" type="image/png" href="img/logo.svg"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="swipes-page">
+
+  <!-- Sidebar -->
+  <div class="sidebar d-flex flex-column p-3 text-white">
+    <div class="d-flex align-items-center justify-content-between mb-3">
+      <a href="Perfil.html">
+        <img src="img/perfil.svg" class="profile-thumb rounded-circle" alt="Perfil" />
+      </a>
+      <img src="img/config.svg" alt="Configurar" class="config-icon" id="toggleConfig" />
+    </div>
+
+    <!-- Línea separadora -->
+    <div class="sidebar-divider mb-3"></div>
+
+    <!-- Tabs -->
+    <div class="tabs d-flex mb-3">
+      <a href="Swipes.html" class="text-white text-decoration-none active-tab me-3">FLAMES</a>
+      <a href="chats.html" class="text-white text-decoration-none inactive-tab">MENSAJES</a>
+    </div> 
+
+    <!-- Configuración -->
+    <div id="config-panel" class="config-panel d-none mt-3">
+        <h3 class="config-title">RANGO DE BÚSQUEDA</h3>
+      <!-- Distancia (una sola bola) -->
+      <div class="mb-3">
+        <label for="distanceRange" class="form-label">Distancia: <span id="distanceValue">50 km</span></label>
+        <div class="range-slider single" id="distanceSlider">
+          <input type="range" id="distanceRange" class="styled-range" min="0" max="100" value="50" step="1">
+        </div>
+      </div>
+      
+        <!-- Edad (doble bola) -->
+        <div class="mb-3">
+            <label for="minAge" class="form-label">Edad: <span id="ageValue">18 - 30</span></label>
+            <div class="range-slider" id="ageSlider">
+                <input type="range" id="minAge" class="styled-range" min="18" max="50" value="18" step="1">
+                <input type="range" id="maxAge" class="styled-range" min="18" max="50" value="30" step="1">            
+            </div>
+        </div>
+    </div>
+
+    <!-- Lista de flames -->
+    <div class="flame-list grid-flames" id="flameList">
+      <div class="flame-item text-center">
+        <img src="img/flame1.svg" class="flame-img rounded-circle" alt="Raquel" />
+        <p class="flame-name mb-0">RAQUEL, 22</p>
+      </div>
+      <div class="flame-item text-center">
+        <img src="img/flame2.svg" class="flame-img rounded-circle" alt="Judith" />
+        <p class="flame-name mb-0">JUDITH, 21</p>
+      </div>
+      <div class="flame-item text-center">
+        <img src="img/flame3.svg" class="flame-img rounded-circle" alt="Blanca" />
+        <p class="flame-name mb-0">BLANCA, 23</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Swiping Card -->
+  <div class="main-content d-flex align-items-center justify-content-center flex-grow-1">
+    <div class="profile-card position-relative">
+      <div class="image-carousel">
+        <img src="img/perfil.svg" class="card-img active" alt="Foto 1" />
+        <img src="img/perfil2.png" class="card-img" alt="Foto 2" />
+        <img src="img/perfil3.png" class="card-img" alt="Foto 3" />
+      
+        <!-- Flechas invisibles a izquierda y derecha -->
+        <div class="click-zone left-zone"></div>
+        <div class="click-zone right-zone"></div>
+      
+        <div class="image-indicators">
+          <div class="indicator active"></div>
+          <div class="indicator"></div>
+          <div class="indicator"></div>
+        </div>
+      </div>                
+
+      <div class="card-info">
+        <div class="d-flex justify-content-between w-100">
+          <div>
+            <h2 class="name-age mb-0">MARC <span class="age">20</span></h2>
+            <p class="distance mb-0">a 1 km de distancia...</p>
+          </div>
+          <div class="description text-end">✨ LO QUE SURJA</div>
+        </div>
+      
+        <div class="card-actions d-flex justify-content-center gap-4 mt-3">
+          <button class="btn btn-light rounded-circle icon-btn" aria-label="Nope">
+            <img src="img/cross.svg" alt="Nope" width="35" />
+          </button>
+          <button class="btn btn-light rounded-circle icon-btn flame-btn" aria-label="Like">
+            <img src="img/logo.svg" alt="Like" width="35" />
+          </button>
+        </div>
+      </div>      
+    </div>
+  </div>
+
+  <script>
+    console.log("Script cargado correctamente");
+
+    // ------------------ IMÁGENES Y SWIPE ------------------
+    const images = document.querySelectorAll('.card-img');
+    const indicators = document.querySelectorAll('.indicator');
+    const likeBtn = document.querySelector('[aria-label="Like"]');
+    const nopeBtn = document.querySelector('[aria-label="Nope"]');
+    const cardActions = document.querySelector('.card-actions');
+  
+    let currentIndex = 0;
+  
+    function showImage(index) {
+      if (index < 0 || index >= images.length) return;
+      images.forEach((img, i) => {
+        img.classList.remove('active');
+        indicators[i]?.classList.remove('active');
+        if (i === index) {
+          img.classList.add('active');
+          indicators[i]?.classList.add('active');
+        }
+      });
+      currentIndex = index;
+    }
+  
+    function swipe(direction) {
+      const activeImg = images[currentIndex];
+      const animClass = direction === 'left' ? 'swipe-left' : 'swipe-right';
+      activeImg.classList.add(animClass);
+      setTimeout(() => {
+        activeImg.classList.remove('active', animClass);
+        if (direction === 'left' && currentIndex < images.length - 1) {
+          showImage(currentIndex + 1);
+        } else if (direction === 'right' && currentIndex > 0) {
+          showImage(currentIndex - 1);
+        } else {
+          activeImg.classList.add('active'); // reaparece si no hay más
+        }
+      }, 500);
+    }
+  
+    likeBtn?.addEventListener('click', () => swipe('right'));
+    nopeBtn?.addEventListener('click', () => swipe('left'));
+  
+    // Click en izquierda o derecha de la imagen para navegar entre imágenes
+    images.forEach(img => {
+      img.addEventListener('click', (e) => {
+        const rect = img.getBoundingClientRect();
+        const clickX = e.clientX - rect.left;
+  
+        if (clickX < rect.width / 2) {
+          // Clic a la izquierda
+          if (currentIndex > 0) showImage(currentIndex - 1);
+        } else {
+          // Clic a la derecha
+          if (currentIndex < images.length - 1) showImage(currentIndex + 1);
+        }
+      });
+    });
+  
+    // ------------------ PANEL DE CONFIGURACIÓN ------------------
+    const configIcon = document.getElementById("toggleConfig");
+    const configPanel = document.getElementById("config-panel");
+    const flameList = document.getElementById("flameList");
+    const distanceRange = document.getElementById("distanceRange");
+    const distanceValue = document.getElementById("distanceValue");
+    const minAgeSlider = document.getElementById("minAge");
+    const maxAgeSlider = document.getElementById("maxAge");
+    const ageValue = document.getElementById("ageValue");
+  
+    let configVisible = false;
+  
+    configIcon?.addEventListener("click", () => {
+      configVisible = !configVisible;
+      configPanel?.classList.toggle("d-none", !configVisible);
+      flameList?.classList.toggle("d-none", configVisible);
+  
+      const tabs = document.querySelector(".tabs");
+      const configTitle = document.querySelector(".config-title");
+  
+      if (configVisible) {
+        tabs?.classList.add("d-none");
+        configTitle?.classList.remove("d-none");
+      } else {
+        tabs?.classList.remove("d-none");
+        configTitle?.classList.add("d-none");
+      }
+    });
+  
+    function updateSingleSliderBackground(input) {
+      const val = parseInt(input.value);
+      const min = parseInt(input.min);
+      const max = parseInt(input.max);
+      const percent = ((val - min) / (max - min)) * 100;
+      input.style.background = `linear-gradient(to right, #ff4d4d 0%, #ff4d4d ${percent}%, rgba(255,255,255,0.2) ${percent}%)`;
+    }
+  
+    function updateDualSliderBackground() {
+      const min = parseInt(minAgeSlider.min);
+      const max = parseInt(maxAgeSlider.max);
+      const minVal = parseInt(minAgeSlider.value);
+      const maxVal = parseInt(maxAgeSlider.value);
+  
+      const minPercent = ((minVal - min) / (max - min)) * 100;
+      const maxPercent = ((maxVal - min) / (max - min)) * 100;
+  
+      document.getElementById("ageSlider").style.background = `
+        linear-gradient(to right,
+          rgba(255,255,255,0.2) ${minPercent}%,
+          #ff4d4d ${minPercent}%,
+          #ff4d4d ${maxPercent}%,
+          rgba(255,255,255,0.2) ${maxPercent}%)
+      `;
+    }
+  
+    function updateDualSlider() {
+      let minVal = parseInt(minAgeSlider.value);
+      let maxVal = parseInt(maxAgeSlider.value);
+  
+      if (minVal > maxVal) {
+        [minVal, maxVal] = [maxVal, minVal];
+        minAgeSlider.value = minVal;
+        maxAgeSlider.value = maxVal;
+      }
+  
+      ageValue.textContent = `${minVal} - ${maxVal}`;
+      updateDualSliderBackground();
+  
+      if (minVal < maxVal) {
+        minAgeSlider.style.zIndex = 3;
+        maxAgeSlider.style.zIndex = 4;
+      } else {
+        minAgeSlider.style.zIndex = 4;
+        maxAgeSlider.style.zIndex = 3;
+      }
+    }
+  
+    distanceRange?.addEventListener("input", () => {
+      distanceValue.textContent = `${distanceRange.value} km`;
+      updateSingleSliderBackground(distanceRange);
+    });
+  
+    minAgeSlider?.addEventListener("input", () => {
+      minAgeSlider.style.zIndex = 3;
+      maxAgeSlider.style.zIndex = 2;
+      updateDualSlider();
+    });
+  
+    maxAgeSlider?.addEventListener("input", () => {
+      minAgeSlider.style.zIndex = 2;
+      maxAgeSlider.style.zIndex = 3;
+      updateDualSlider();
+    });
+  
+    window.addEventListener("DOMContentLoaded", () => {
+      if (distanceRange) {
+        distanceValue.textContent = `${distanceRange.value} km`;
+        updateSingleSliderBackground(distanceRange);
+      }
+      if (minAgeSlider && maxAgeSlider) {
+        updateDualSlider();
+      }
+    });
+</script>
+
+  
+  
+ 
+
+</body>
+</html>

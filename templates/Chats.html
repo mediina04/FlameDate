@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>FlameDate</title>
+  <link rel="icon" type="image/png" href="img/logo.svg"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="swipes-page">
+
+  <!-- Sidebar -->
+  <div class="sidebar d-flex flex-column p-3 text-white">
+    <div class="d-flex align-items-center justify-content-between mb-3">
+      <a href="Perfil.html">
+        <img src="img/perfil.svg" class="profile-thumb rounded-circle" alt="Perfil" />
+      </a>
+    </div>
+
+    <div class="sidebar-divider mb-3"></div>
+
+    <div class="tabs d-flex mb-3">
+      <a href="Swipes.html" class="text-white text-decoration-none inactive-tab me-3">FLAMES</a>
+      <a href="chats.html" class="text-white text-decoration-none active-tab">MENSAJES</a>
+    </div>  
+
+    <div class="chat-preview-list">
+        <div class="chat-preview d-flex align-items-center">
+          <img src="img/flame1.svg" class="chat-preview-avatar rounded-circle me-3" />
+          <div class="chat-preview-text">
+            <p class="chat-preview-name mb-0">RAQUEL, 22</p>
+            <p class="chat-preview-last">Hey! ¿Qué tal tu día?</p>
+          </div>
+        </div>
+      
+        <div class="chat-preview d-flex align-items-center">
+          <img src="img/flame2.svg" class="chat-preview-avatar rounded-circle me-3" />
+          <div class="chat-preview-text">
+            <p class="chat-preview-name mb-0">JUDITH, 21</p>
+            <p class="chat-preview-last">Te mando una foto 😉</p>
+          </div>
+        </div>
+      
+        <div class="chat-preview d-flex align-items-left">
+          <img src="img/flame3.svg" class="chat-preview-avatar rounded-circle me-3" />
+          <div class="chat-preview-text">
+            <p class="chat-preview-name mb-0">BLANCA, 23</p>
+            <p class="chat-preview-last">Vamos al concierto o qué?</p>
+          </div>
+        </div>
+      </div>
+            
+  </div>
+
+  <!-- Chat principal -->
+  <div class="main-container">
+    <div class="main-chat d-flex flex-column">
+      <!-- Cabecera -->
+      <div class="chat-header">
+        <img src="img/flame1.svg" alt="Raquel" class="chat-avatar" />
+        <span class="chat-name">RAQUEL, 22</span>
+      </div>
+
+      <!-- Cuerpo -->
+      <div class="chat-body">
+        <div class="message message-other">Hola! ¿Qué tal?</div>
+        <div class="message message-you">Muy bien, ¿y tú?</div>
+        <div class="message message-other">Con ganas de verte 👀</div>
+        <div class="message message-you">Cuando quieras 😏</div>
+      </div>
+
+      <!-- Input -->
+      <div class="chat-input">
+        <input type="text" class="form-control message-input" placeholder="Escribe un mensaje..." />
+        <button class="send-btn">
+          <img src="img/send.png" alt="Enviar" />
+        </button>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
