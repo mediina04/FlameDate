@@ -192,14 +192,6 @@ input[type="range"]::-moz-range-thumb {
 /* Fondo de la barra para sliders dobles */
 .range-slider::before {
   content: "";
-  position: absolute;
-  top: 12px;
-  left: 0;
-  right: 0;
-  height: 6px;
-  background: #ccc;
-  border-radius: 4px;
-  z-index: 0;
 }
 
 /* Los sliders dobles deben ir encima */
@@ -208,9 +200,11 @@ input[type="range"]::-moz-range-thumb {
   top: 0;
   left: 0;
   pointer-events: none;
-  background: transparent;
+  background: none; /* mejor que transparent para evitar errores visuales */
   z-index: 1;
 }
+
+
 
 /* Activar solo los visibles */
 .range-slider input.styled-range {
