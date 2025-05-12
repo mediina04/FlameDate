@@ -23,11 +23,11 @@
     <!-- Línea separadora -->
     <div class="sidebar-divider mb-3"></div>
 
-    <!-- Tabs -->
-    <div class="tabs d-flex mb-3">
-      <a href="Swipes.html" class="text-white text-decoration-none active-tab me-3">FLAMES</a>
-      <a href="chats.html" class="text-white text-decoration-none inactive-tab">MENSAJES</a>
-    </div> 
+    <div class="tabs d-flex w-100 mb-3">
+      <a href="Swipes.html" class="text-white text-decoration-none active-tab tab-item text-center">FLAMES</a>
+      <a href="chats.html" class="text-white text-decoration-none inactive-tab tab-item text-center">MENSAJES</a>
+    </div>
+
 
     <!-- Configuración -->
     <div id="config-panel" class="config-panel d-none mt-3">
@@ -35,10 +35,9 @@
       <!-- Distancia (una sola bola) -->
       <div class="mb-3">
         <label for="distanceRange" class="form-label">Distancia: <span id="distanceValue">50 km</span></label>
-        <div class="range-slider single" id="distanceSlider">
-          <input type="range" id="distanceRange" class="styled-range" min="0" max="100" value="50" step="1">
-        </div>
+        <input type="range" id="distanceRange" class="styled-range" min="1" max="50" value="5" step="1">
       </div>
+
       
         <!-- Edad (doble bola) -->
         <div class="mb-3">

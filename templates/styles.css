@@ -146,90 +146,78 @@ body.swipes-page {
     margin-bottom: 1rem;
   }  
 
-/* Contenedor para cada sección */
-.slider-group {
-    margin-bottom: 2rem;
-  }
-  
-  /* Sliders base */
-  input[type="range"] {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 100%;
-    height: 6px;
-    border-radius: 4px;
-    background: #ccc;
-    outline: none;
-    transition: background 0.3s ease;
-  }
-  
-  /* Slider "bola" */
-  input[type="range"]::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    appearance: none;
-    height: 16px;
-    width: 16px;
-    border-radius: 50%;
-    background: #ff4d4d;
-    cursor: pointer;
-    border: none;
-    position: relative;
-    z-index: 2;
-  }
-  input[type="range"]::-moz-range-thumb {
-    height: 16px;
-    width: 16px;
-    border-radius: 50%;
-    background: #ff4d4d;
-    cursor: pointer;
-    border: none;
-    position: relative;
-    z-index: 2;
-  }
-  
-  /* Sliders dobles (edad) */
-  .range-slider {
-    position: relative;
-    height: 30px; /* Aumentamos el alto para evitar solapamientos */
-    width: 100%;
-    margin-top: 8px;
-  }
-  
-  /* Slider base transparente */
-  .range-slider input[type="range"] {
-    position: absolute;
-    width: 100%;
-    height: 6px;
-    background: transparent;
-    pointer-events: none;
-    z-index: 1;
-  }
-  
-  /* Slider interactivo */
-  .range-slider input[type="range"].styled-range {
-    pointer-events: all;
-    z-index: 2;
-  }
-  
-  /* Fondo del slider de edad */
-  #ageSlider {
-    background: #ccc;
-    border-radius: 4px;
-    height: 6px;
-    position: absolute;
-    top: 12px;
-    left: 0;
-    right: 0;
-    z-index: 0;
-  }
-  
-  /* Orden de los sliders para superposición correcta */
-  #minAge.styled-range {
-    z-index: 3;
-  }
-  #maxAge.styled-range {
-    z-index: 4;
-  }
+/* Estilo base para todos los sliders */
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 6px;
+  border-radius: 4px;
+  background: #ccc;
+  outline: none;
+  transition: background 0.3s ease;
+}
+
+/* Bola del slider */
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  height: 16px;
+  width: 16px;
+  border-radius: 50%;
+  background: #ff4d4d;
+  cursor: pointer;
+  border: none;
+  position: relative;
+  z-index: 3;
+}
+input[type="range"]::-moz-range-thumb {
+  height: 16px;
+  width: 16px;
+  border-radius: 50%;
+  background: #ff4d4d;
+  cursor: pointer;
+  border: none;
+  position: relative;
+  z-index: 3;
+}
+
+/* Sliders dobles */
+.range-slider {
+  position: relative;
+  height: 30px;
+  width: 100%;
+  margin-top: 8px;
+}
+
+/* Fondo de la barra para sliders dobles */
+.range-slider::before {
+  content: "";
+  position: absolute;
+  top: 12px;
+  left: 0;
+  right: 0;
+  height: 6px;
+  background: #ccc;
+  border-radius: 4px;
+  z-index: 0;
+}
+
+/* Los sliders dobles deben ir encima */
+.range-slider input[type="range"] {
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  background: transparent;
+  z-index: 1;
+}
+
+/* Activar solo los visibles */
+.range-slider input.styled-range {
+  pointer-events: all;
+  z-index: 2;
+}
+
   
 
 /* Divider */
@@ -240,22 +228,29 @@ body.swipes-page {
     opacity: 0.5;
 }
 
-/* Tabs */
-.tabs span {
-    font-weight: 600;
-    font-size: 14px;
-    cursor: pointer;
+/* General tab layout */
+.tab-item {
+  flex: 1;               /* Cada tab ocupa el 50% */
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  padding-bottom: 4px;
 }
 
+/* Tabs específicos */
 .active-tab {
-    border-bottom: 2px solid white;
-    padding-bottom: 4px;
-    margin-right: 10px;
+  border-bottom: 2px solid white; /* Marca activa */
 }
 
 .inactive-tab {
-    opacity: 0.6;
+  opacity: 0.6;
 }
+
+/* Elimina margen lateral si usas flex */
+.tabs {
+  width: 100%;
+}
+
 
 /* Lista de Flames */
 .flame-list {
@@ -473,11 +468,11 @@ body.swipes-page {
   
   .chat-preview {
     padding: 12px 8px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid #ffffff; /* Línea blanca */
     cursor: pointer;
     transition: background 0.2s ease;
   }
-  
+
   .chat-preview:hover {
     background-color: rgba(255, 255, 255, 0.05);
     border-radius: 12px;
@@ -490,8 +485,11 @@ body.swipes-page {
   }
   
   .chat-preview-text {
-    color: white;
-  }
+  color: white;
+  text-align: left;
+  flex: 1;
+}
+
   
   .chat-preview-name {
     font-weight: 700;
@@ -661,13 +659,20 @@ body.swipes-page {
     font-size: 14px;
   }
   
-  .btn-white {
-    background: white;
-    color: black;
-    font-weight: 600;
-    border-radius: 25px;
-    padding: 10px 24px;
+  .btn-logout {
+  font-family: 'Onest', sans-serif;
+  font-weight: bold;
+  background-color: #ffffff;
+  color: #ff5a5f; /* Rojo Bootstrap */
+  transition: background-color 0.3s, color 0.3s;
+  border-radius: 50px;
   }
+
+  .btn-logout:hover {
+    background-color: #ff5a5f;
+    color: #ffffff;
+  }
+
   
   .profile-settings .header {
     display: flex;

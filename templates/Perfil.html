@@ -13,13 +13,16 @@
 
   <!-- Sidebar -->
   <div class="sidebar d-flex flex-column align-items-center p-4 text-white">
-    <a href="Swipes.html" class="back-arrow mb-4">
-      <img src="img/arrow-back.png" alt="Volver" />
-    </a>
+    <div class="w-100 d-flex justify-content-start">
+      <a href="Swipes.html" class="back-arrow mb-4">
+        <img src="img/arrow-back.png" alt="Volver" />
+      </a>
+    </div>
+
     <img src="img/perfil.svg" class="profile-avatar mb-3 rounded-circle" alt="Usuario" />
     <h2 class="profile-name">MARC, 20</h2>
     <p class="profile-status">✨ LO QUE SURJA</p>
-    <button class="btn btn-white mt-3">Cerrar Sesión</button>
+    <a href="Login.html" class="btn btn-logout mt-3">Cerrar Sesión</a>
   </div>
 
   <!-- Panel principal -->
@@ -42,34 +45,39 @@
       </div>
     </div>
 
-    <!-- Información personal -->
-    <div class="info-section mb-4">
-        <h5 class="mb-3">INFORMACIÓN PERSONAL</h5>
-        <input type="text" class="form-input me-2" placeholder="Nombre" />
-        <input type="number" class="form-input" placeholder="Edad" />
-    </div>
-  
+    <!-- Agrupar todas las secciones horizontalmente -->
+<div class="d-flex flex-wrap align-items-end gap-4 mb-4">
 
-    <!-- Intereses -->
-    <div class="info-section mb-4">
-      <h5 class="mb-3">INTERESES</h5>
-      <select class="form-select custom-select w-auto d-inline-block me-2">
-        <option selected>Mujeres</option>
-        <option>Hombres</option>
-        <option>Ambos</option>
-      </select>
-    </div>
+  <!-- Información personal -->
+  <div class="info-section">
+    <h5 class="mb-3">INFORMACIÓN PERSONAL</h5>
+    <input type="text" class="form-input me-2" placeholder="Nombre" />
+    <input type="number" class="form-input" placeholder="Edad" />
+  </div>
 
-    <!-- Identidad -->
-    <div class="info-section mb-4">
-      <h5 class="mb-3">ME IDENTIFICO</h5>
-      <select class="form-select custom-select w-auto d-inline-block">
-        <option selected>Heterosexual</option>
-        <option>Homosexual</option>
-        <option>Bisexual</option>
-        <option>Otro</option>
-      </select>
-    </div>
+  <!-- Intereses -->
+  <div class="info-section">
+    <h5 class="mb-3">INTERESES</h5>
+    <select class="form-select custom-select w-auto d-inline-block me-2">
+      <option selected>Mujeres</option>
+      <option>Hombres</option>
+      <option>Ambos</option>
+    </select>
+  </div>
+
+  <!-- Identidad -->
+  <div class="info-section">
+    <h5 class="mb-3">ME IDENTIFICO</h5>
+    <select class="form-select custom-select w-auto d-inline-block">
+      <option selected>Heterosexual</option>
+      <option>Homosexual</option>
+      <option>Bisexual</option>
+      <option>Otro</option>
+    </select>
+  </div>
+
+</div>
+
 
     <!-- Qué buscas -->
     <div class="info-section">
