@@ -45,9 +45,9 @@
           <div class="w-100 text-start">
             <label for="minAge" class="form-label">Edad: <span id="ageValue">18 - 30</span></label>
           </div>
-          <div class="range-slider" id="ageSlider">
+          <div class="range-slider position-relative" id="ageSlider">
             <input type="range" id="minAge" class="styled-range" min="18" max="50" value="18" step="1">
-            <input type="range" id="maxAge" class="styled-range" min="18" max="50" value="30" step="2">
+            <input type="range" id="maxAge" class="styled-range" min="18" max="50" value="30" step="1">
           </div>
         </div>
     </div>
@@ -107,183 +107,10 @@
         </div>
       </div>      
     </div>
-  </div>
 
-  <script>
-        // ------------------ IMÁGENES Y SWIPE ------------------
-    const images = document.querySelectorAll('.card-img');
-    const indicators = document.querySelectorAll('.indicator');
-    const likeBtn = document.querySelector('[aria-label="Like"]');
-    const nopeBtn = document.querySelector('[aria-label="Nope"]');
-    const cardActions = document.querySelector('.card-actions');
-  
-    let currentIndex = 0;
-  
-    function showImage(index) {
-      if (index < 0 || index >= images.length) return;
-      images.forEach((img, i) => {
-        img.classList.remove('active');
-        indicators[i]?.classList.remove('active');
-        if (i === index) {
-          img.classList.add('active');
-          indicators[i]?.classList.add('active');
-        }
-      });
-      currentIndex = index;
-    }
-  
-    function swipe(direction) {
-      const activeImg = images[currentIndex];
-      const animClass = direction === 'left' ? 'swipe-left' : 'swipe-right';
-      activeImg.classList.add(animClass);
-      setTimeout(() => {
-        activeImg.classList.remove('active', animClass);
-        if (direction === 'left' && currentIndex < images.length - 1) {
-          showImage(currentIndex + 1);
-        } else if (direction === 'right' && currentIndex > 0) {
-          showImage(currentIndex - 1);
-        } else {
-          activeImg.classList.add('active'); // reaparece si no hay más
-        }
-      }, 500);
-    }
-  
-    likeBtn?.addEventListener('click', () => swipe('right'));
-    nopeBtn?.addEventListener('click', () => swipe('left'));
-  
-    // Click en izquierda o derecha de la imagen para navegar entre imágenes
-    images.forEach(img => {
-      img.addEventListener('click', (e) => {
-        const rect = img.getBoundingClientRect();
-        const clickX = e.clientX - rect.left;
-  
-        if (clickX < rect.width / 2) {
-          // Clic a la izquierda
-          if (currentIndex > 0) showImage(currentIndex - 1);
-        } else {
-          // Clic a la derecha
-          if (currentIndex < images.length - 1) showImage(currentIndex + 1);
-        }
-      });
-    });
-  
-    // ------------------ PANEL DE CONFIGURACIÓN ------------------
-    const configIcon = document.getElementById("toggleConfig");
-    const configPanel = document.getElementById("config-panel");
-    const flameList = document.getElementById("flameList");
-    const distanceRange = document.getElementById("distanceRange");
-    const distanceValue = document.getElementById("distanceValue");
-    const minAgeSlider = document.getElementById("minAge");
-    const maxAgeSlider = document.getElementById("maxAge");
-    const ageValue = document.getElementById("ageValue");
-  
-    let configVisible = false;
-  
-    configIcon?.addEventListener("click", () => {
-      configVisible = !configVisible;
-      configPanel?.classList.toggle("d-none", !configVisible);
-      flameList?.classList.toggle("d-none", configVisible);
-  
-      const tabs = document.querySelector(".tabs");
-      const configTitle = document.querySelector(".config-title");
-  
-      if (configVisible) {
-        tabs?.classList.add("d-none");
-        configTitle?.classList.remove("d-none");
-      } else {
-        tabs?.classList.remove("d-none");
-        configTitle?.classList.add("d-none");
-      }
-    });
-  
-    function updateSingleSliderBackground(input) {
-      const val = parseInt(input.value);
-      const min = parseInt(input.min);
-      const max = parseInt(input.max);
-      const percent = ((val - min) / (max - min)) * 100;
-      input.style.background = `linear-gradient(to right, #ff4d4d 0%, #ff4d4d ${percent}%, rgba(255,255,255,0.2) ${percent}%)`;
-    }
-  
-    function updateDualSliderBackground() {
-    const min = parseInt(minAgeSlider.min);
-    const max = parseInt(maxAgeSlider.max);
-    const minVal = parseInt(minAgeSlider.value);
-    const maxVal = parseInt(maxAgeSlider.value);
+  <script src="swipe.js" defer></script>
+  <script src="config.js" defer></script>
 
-    const minPercent = ((minVal - min) / (max - min)) * 100;
-    const maxPercent = ((maxVal - min) / (max - min)) * 100;
-
-    const gradient = `
-      linear-gradient(to right,
-        rgba(255,255,255,0.2) ${minPercent}%,
-        #ff4d4d ${minPercent}%,
-        #ff4d4d ${maxPercent}%,
-        rgba(255,255,255,0.2) ${maxPercent}%)
-    `;
-
-    // Aplica el fondo a ambos sliders (visualmente se combinan)
-    minAgeSlider.style.background = gradient;
-    maxAgeSlider.style.background = gradient;
-  }
-
-  
-    function updateDualSlider() {
-      let minVal = parseInt(minAgeSlider.value);
-      let maxVal = parseInt(maxAgeSlider.value);
-  
-      if (minVal > maxVal) {
-        minVal = maxVal;
-        minAgeSlider.value = minVal;
-      }
-      if (maxVal < minVal) {
-        maxVal = minVal;
-        maxAgeSlider.value = maxVal;
-      }
-
-  
-      ageValue.textContent = `${minVal} - ${maxVal}`;
-      updateDualSliderBackground();
-  
-      if (minVal < maxVal) {
-        minAgeSlider.style.zIndex = 3;
-        maxAgeSlider.style.zIndex = 4;
-      } else {
-        minAgeSlider.style.zIndex = 4;
-        maxAgeSlider.style.zIndex = 3;
-      }
-    }
-  
-    distanceRange?.addEventListener("input", () => {
-      distanceValue.textContent = `${distanceRange.value} km`;
-      updateSingleSliderBackground(distanceRange);
-    });
-  
-    minAgeSlider?.addEventListener("input", () => {
-      minAgeSlider.style.zIndex = 3;
-      maxAgeSlider.style.zIndex = 2;
-      updateDualSlider();
-    });
-  
-    maxAgeSlider?.addEventListener("input", () => {
-      minAgeSlider.style.zIndex = 2;
-      maxAgeSlider.style.zIndex = 3;
-      updateDualSlider();
-    });
-  
-    window.addEventListener("DOMContentLoaded", () => {
-      if (distanceRange) {
-        distanceValue.textContent = `${distanceRange.value} km`;
-        updateSingleSliderBackground(distanceRange);
-      }
-      if (minAgeSlider && maxAgeSlider) {
-        updateDualSlider();
-      }
-    });
-</script>
-
-  
-  
- 
 
 </body>
 </html>
