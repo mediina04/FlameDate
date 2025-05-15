@@ -1,5 +1,3 @@
-const likeBtn = document.querySelector('[aria-label="Like"]');
-const nopeBtn = document.querySelector('[aria-label="Nope"]');
 const profileCard = document.querySelector('.profile-card');
 
 let currentProfileIndex = 0;
@@ -29,16 +27,16 @@ const profiles = [
     ]
   },
   {
-  name: "CARLA",
-  age: 24,
-  distance: "a 5 km de distancia...",
-  description: "😅 ROLLOS CORTOS",
-  images: [
-    "img/perfil.svg",
-    "img/perfil2.png",
-    "img/perfil3.png"
-]
-}
+    name: "CARLA",
+    age: 24,
+    distance: "a 5 km de distancia...",
+    description: "😅 ROLLOS CORTOS",
+    images: [
+      "img/perfil.svg",
+      "img/perfil2.png",
+      "img/perfil3.png"
+    ]
+  }
 ];
 
 function loadProfile(profile) {
@@ -75,8 +73,10 @@ function loadProfile(profile) {
   description.textContent = profile.description;
 
   setupImageClickEvents();
+  setupButtonEvents(); // 👈 Añadir eventos a los botones actuales
+}
 
-  // 🔁 Asignar eventos a los botones recién cargados
+function setupButtonEvents() {
   const likeBtn = document.querySelector('[aria-label="Like"]');
   const nopeBtn = document.querySelector('[aria-label="Nope"]');
 
@@ -84,14 +84,12 @@ function loadProfile(profile) {
   nopeBtn?.addEventListener('click', () => swipeCard('left'));
 }
 
-
 function setupImageClickEvents() {
   const imgs = document.querySelectorAll('.card-img');
   const indicators = document.querySelectorAll('.indicator');
   const leftZone = document.querySelector('.left-zone');
   const rightZone = document.querySelector('.right-zone');
 
-  // Click en imagen (opcional si clicas directamente la imagen)
   imgs.forEach((img, i) => {
     img.addEventListener('click', (e) => {
       const rect = img.getBoundingClientRect();
@@ -105,11 +103,9 @@ function setupImageClickEvents() {
     });
   });
 
-  // Click en zonas laterales
   leftZone?.addEventListener('click', () => prevImage(imgs, indicators));
   rightZone?.addEventListener('click', () => nextImage(imgs, indicators));
 }
-
 
 function swipeCard(direction) {
   const animClass = direction === 'left' ? 'swipe-left' : 'swipe-right';
@@ -127,38 +123,22 @@ function swipeCard(direction) {
   }, 500);
 }
 
-
 function showNoMoreMessage() {
   const carousel = document.querySelector('.image-carousel');
   const cardInfo = document.querySelector('.card-info');
 
-  // Eliminar elementos antiguos
   carousel?.remove();
   cardInfo?.remove();
 
   const noMoreDiv = document.createElement('div');
   noMoreDiv.className = 'no-more-card text-center p-5';
   noMoreDiv.innerHTML = `
-    <h2 class="text-white">🎉 ¡No hay más personas cerca por ahora!</h2>
-    <p class="text-white-50">Vuelve más tarde para descubrir nuevos perfiles.</p>
+    <h2 class="text-white"> ¡No hay más personas cerca!</h2>
+    <p class="text-white-50">Actualiza el rango de distancia para descubrir nuevos perfiles.</p>
   `;
 
   profileCard?.appendChild(noMoreDiv);
 }
-
-// Botones de acción
-likeBtn?.addEventListener('click', () => {
-  swipeCard('right');
-});
-
-nopeBtn?.addEventListener('click', () => {
-  swipeCard('left');
-});
-
-// Inicialización
-window.addEventListener('DOMContentLoaded', () => {
-  loadProfile(profiles[currentProfileIndex]);
-});
 
 function nextImage(imgs, indicators) {
   if (currentImageIndex < imgs.length - 1) {
@@ -180,3 +160,7 @@ function prevImage(imgs, indicators) {
   }
 }
 
+// Inicializar al cargar la página
+window.addEventListener('DOMContentLoaded', () => {
+  loadProfile(profiles[currentProfileIndex]);
+});

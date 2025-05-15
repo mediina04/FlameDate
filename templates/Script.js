@@ -1,3 +1,76 @@
+// ------------------ IMÁGENES Y SWIPE ------------------
+const images = document.querySelectorAll('.card-img');
+const indicators = document.querySelectorAll('.indicator');
+const likeBtn = document.querySelector('[aria-label="Like"]');
+const nopeBtn = document.querySelector('[aria-label="Nope"]');
+const profileCard = document.querySelector('.profile-card');
+
+let currentIndex = 0;
+
+// Función para mostrar la imagen activa
+function showImage(index) {
+  if (index < 0 || index >= images.length) return;
+  images.forEach((img, i) => {
+    img.classList.toggle('active', i === index);
+    indicators[i]?.classList.toggle('active', i === index);
+  });
+  currentIndex = index;
+}
+
+// Función para manejar el swipe visual y lógica
+function swipeCard(direction) {
+  const animClass = direction === 'left' ? 'swipe-left' : 'swipe-right';
+  profileCard.classList.add(animClass);
+
+  setTimeout(() => {
+    profileCard.classList.remove(animClass);
+    console.log(direction === 'left' ? 'Nope' : 'Like');
+  }, 500);
+}
+
+// Función para pasar a la siguiente imagen
+function nextImage() {
+  if (currentIndex < images.length - 1) {
+    showImage(currentIndex + 1);
+  }
+}
+
+// Función para regresar a la imagen anterior
+function prevImage() {
+  if (currentIndex > 0) {
+    showImage(currentIndex - 1);
+  }
+}
+
+// Evento para los botones de "Like" y "Nope"
+likeBtn?.addEventListener('click', () => {
+  swipeCard('right');
+});
+
+nopeBtn?.addEventListener('click', () => {
+  swipeCard('left');
+});
+
+// Evento para hacer clic en los bordes de las imágenes
+images.forEach(img => {
+  img.addEventListener('click', (e) => {
+    const rect = img.getBoundingClientRect();
+    const clickX = e.clientX - rect.left;
+
+    if (clickX < rect.width / 2) {
+      prevImage();
+    } else {
+      nextImage();
+    }
+  });
+});
+
+// Inicializar la primera imagen como activa
+window.addEventListener('DOMContentLoaded', () => {
+  showImage(currentIndex);
+});
+
+// ------------------ PANEL DE CONFIGURACIÓN ------------------
 const configIcon = document.getElementById("toggleConfig");
 const configPanel = document.getElementById("config-panel");
 const flameList = document.getElementById("flameList");
@@ -43,12 +116,13 @@ function updateDualSliderBackground() {
   const minPercent = ((minVal - min) / (max - min)) * 100;
   const maxPercent = ((maxVal - min) / (max - min)) * 100;
 
-  const gradient = 
-    `linear-gradient(to right,
+  const gradient = `
+    linear-gradient(to right,
       rgba(255,255,255,0.2) ${minPercent}%,
       #ff4d4d ${minPercent}%,
       #ff4d4d ${maxPercent}%,
-      rgba(255,255,255,0.2) ${maxPercent}%)`;
+      rgba(255,255,255,0.2) ${maxPercent}%)
+  `;
 
   minAgeSlider.style.background = gradient;
   maxAgeSlider.style.background = gradient;

@@ -199,12 +199,12 @@ input[type="range"]::-moz-range-thumb {
   position: absolute;
   top: 0;
   left: 0;
-  pointer-events: none;
-  background: none; /* mejor que transparent para evitar errores visuales */
+  width: 100%;
+  height: 6px;
+  pointer-events: none; /* por defecto, ninguno interactúa */
+  background: none;
   z-index: 1;
 }
-
-
 
 /* Activar solo los visibles */
 .range-slider input.styled-range {
@@ -212,7 +212,7 @@ input[type="range"]::-moz-range-thumb {
   z-index: 2;
 }
 
-  
+
 
 /* Divider */
 .sidebar-divider {
@@ -317,35 +317,45 @@ input[type="range"]::-moz-range-thumb {
 
 /* Imagen */
 .image-carousel {
-    position: relative;
-    width: 100%;
-    height: 100%;
-  }
-  
-  .card-img {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  z-index: 1; /* Asegura que no tape los botones */
+}
+
+.card-img {
     position: absolute;
     top: 0; left: 0;
     width: 100%;
-    height: auto;
+    height: 100%;
+    object-fit: cover;
     opacity: 0;
     transition: opacity 0.3s ease;
-  }
-  
-  .card-img.active {
-    opacity: 1;
-    z-index: 1;
-  }
-  
-  .click-zone {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    width: 50%;
-    z-index: 2;
-  }
-  
-  .left-zone { left: 0; }
-  .right-zone { right: 0; }
+    z-index: 0;
+}
+
+
+.card-img.active {
+  opacity: 1;
+  z-index: 1;
+}
+
+/* Click zones */
+.click-zone {
+  position: absolute;
+  top: 0;
+  bottom: 50%; /* Solo en la mitad superior */
+  width: 50%;
+  z-index: 1; /* Menor que los botones */
+}
+
+.left-zone {
+  left: 0;
+}
+
+.right-zone {
+  right: 0;
+}
   
   /* Animación swipe */
   .swipe-left {
@@ -428,26 +438,28 @@ input[type="range"]::-moz-range-thumb {
 
 /* Botones */
 .card-actions {
-    position: absolute;
-    bottom: 20px;
-    left: 0;
-    right: 0;
-    display: flex;
-    justify-content: center;
-    gap: 40px;
-    z-index: 2;
+  position: absolute;
+  bottom: 20px;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  z-index: 10; /* Asegura que esté por encima de cualquier otra cosa */
 }
-  
+
 .icon-btn {
-    background-color: white;
-    border: none;
-    width: 60px;
-    height: 60px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: transform 0.2s ease;
+  background-color: white;
+  border: none;
+  width: 60px;
+  height: 60px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease;
+  position: relative;
+  z-index: 11; /* Máximo para estar seguro */
 }
   
 .icon-btn:hover {
@@ -463,6 +475,22 @@ input[type="range"]::-moz-range-thumb {
     background-color: #00C26D;
     color: white;
 }
+
+.icon-btn:focus,
+.icon-btn:active {
+  background-color: white !important;
+  outline: none;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.flame-btn:focus,
+.flame-btn:active {
+  background-color: #00C26D !important;
+  outline: none;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+
 
 /* PÁGINA CHAT*/
 .chat-preview-list {
